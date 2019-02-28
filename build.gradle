@@ -1,24 +1,29 @@
 buildscript {
-    ext.kotlin_version = '1.2.41'
-    ext.vertx_version = '3.5.1'
-
+    ext {
+        kotlin_version = '1.3.21'
+        vertx_version = '3.5.1'
+        detektVersion = '1.0.0-RC12'
+    }
     repositories {
         mavenCentral()
+        gradlePluginPortal()
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${detektVersion}"
     }
 }
 
-plugins {
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC7"
-}
+ext.gradlePluginsDir = 'gradle/plugins/'
 
 apply plugin: 'idea'
 apply plugin: 'kotlin'
+apply from: "$gradlePluginsDir/detekt/detekt.gradle"
 
 repositories {
+    mavenLocal()
     mavenCentral()
+    jcenter()
 }
 
 group 'io.github.simonedavico'
@@ -38,7 +43,7 @@ dependencies {
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.2'
     testCompile 'org.junit.jupiter:junit-jupiter-params:5.0.2'
     testCompile 'org.assertj:assertj-core:3.8.0'
-    testCompile 'com.github.javafaker:javafaker:0.14'
+//    testCompile 'com.github.javafaker:javafaker:0.14'
 }
 
 compileKotlin {
@@ -48,10 +53,7 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-detekt {
-    version = "1.0.0.RC7"
-    defaultProfile {
-        input = file("src/main/kotlin")
-        filters = ".*/resources/.*,.*/build/.*"
-    }
+wrapper {
+    gradleVersion = '5.2.1'
+    distributionType = Wrapper.DistributionType.ALL
 }

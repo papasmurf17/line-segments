@@ -1,0 +1,16 @@
+apply plugin: "io.gitlab.arturbosch.detekt"
+
+detekt {
+    input = files(
+        "src/main/kotlin", "src/test/kotlin"
+    )
+    config = files("$gradlePluginsDir/detekt/detekt-configuration.yml")
+    reports {
+        xml {
+            enabled = true
+        }
+        html {
+            enabled = false
+        }
+    }
+}

@@ -1,0 +1,5 @@
+formatting:
+  autoCorrect: false
+
+build:
+  maxIssues: 100
