@@ -13,6 +13,7 @@ fun main(args: Array<String>) {
     println("Endpoint ${args[0]}")
 
     val restClient = LinePatternRest(args[0])
+    val segmentLength = args[1].toInt()
 
     restClient
             .deleteSpace()
@@ -32,12 +33,12 @@ fun main(args: Array<String>) {
             .apply { println("SPACE: $this") }
 
     restClient
-            .getSegment(3)
+            .getSegment(segmentLength)
             .get()
             .apply {
                 val lines: Set<Line> = getPointsFromJsonString(this)
 
-                compareWithSnapshot(3, lines)
+                compareWithSnapshot(segmentLength, lines)
             }
 
     exitProcess(0)
