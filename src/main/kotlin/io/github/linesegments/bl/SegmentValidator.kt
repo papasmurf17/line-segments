@@ -25,7 +25,7 @@ fun compareWithPrefixedInput(segmentLength: Int, lines: Set<Line>) = validate(se
 private fun validate(segmentLength: Int) = {
     lines: Set<Line> -> {
         snapshotLines: Set<Line> ->
-            assert(snapshotLines.size == lines.size) { "$segmentLength - Divergent size" }
+            assert(snapshotLines.size == lines.size) { "Divergent size - Expected size ${snapshotLines.size} actual ${lines.size}:\n$lines" }
             lines.map {
                 assert(snapshotLines.contains(it)) { "$segmentLength - $it does not exist in snapshot lines" }
             }
